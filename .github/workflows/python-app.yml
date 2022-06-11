@@ -39,7 +39,6 @@ jobs:
         export PYTHONPATH=src
         pytest
     name: Notify in Slack Channels
-    on: workflow_dispatch
     jobs:
       notify-slack:
         runs-on: ubuntu-latest
