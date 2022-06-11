@@ -38,6 +38,20 @@ jobs:
       run: |
         export PYTHONPATH=src
         pytest
-    - name: CI Test Result in Slack
-        uses: sanjaykrishnanrs/slack-notify-junitxml-action@0.1.0-beta
-
+    name: Notify in Slack Channels
+    on: workflow_dispatch
+    jobs:
+      notify-slack:
+        runs-on: ubuntu-latest
+        name: A job to notify in slack with my github actions
+        environment: Slackbot Notification
+        steps:
+          - uses: actions/checkout@v2
+          - name: Notify Slack Test Result
+            uses: sanjaykrishnanrs/slack-notify-junitxml-action@0.1.12-alpha
+            with:
+              title: API Tests
+              slackbotid: ${{ secrets.SLACKBOTID }}
+              slackbottoken: ${{ secrets.SLACKBOTTOKEN }}
+              slackchannel: '${{ secrets.SLACKCHANNEL }}'
+              junitxml_filepath: junitreport.xml
